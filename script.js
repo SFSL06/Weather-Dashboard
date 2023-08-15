@@ -32,18 +32,22 @@
         fetch(queryURL)
             .then(function (response) {
                 return response.json();
-            }).then(function (data) {                
+            }).then(function (data) {    
+        console.log(data);            
         // Convert the temp to Celsius
         var temp = data.main.temp - 273.15;
-        
+
+             
         dateToday = dayjs();
         dateToday = dayjs(dateToday).format('DD/MM/YYYY');
         // Transfer content to HTML
+        //var imgCurrent = $("#currentWeather").attr("src", "data.weather[0].icon")
          $(".city").html("<h1>" + data.name + ' ' + dateToday + "</h1>");
          $(".temp").text("Temperature (C) " + temp.toFixed(2));
          $(".wind").text("Wind Speed: " + data.wind.speed);
          $(".humidity").text("Humidity: " + data.main.humidity);
-                         
+         //currentPicEl.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
+         // currentPicEl.setAttribute("alt", response.data.weather[0].description);           
             });
             fetch(queryForecast)
             .then(function (response) {
@@ -61,10 +65,23 @@
         var windForecast = "0";
         var humidityForecast = "0";
 
-        
+        // currentPicEl.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
+        // currentPicEl.setAttribute("alt", response.data.weather[0].description);
          $("#forecastHeader").text("Forecast");
           //forecastIndex  = (i * 8 ) + 1;
-         var forecastCardEl = $("#day1")
+          var forecastCardEl = $("#day1")
+          var dateForecast = new Date(data.list[1].dt_txt);
+          dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
+          var dateForecast = $("<h5>").text(dateForecast);
+          forecastCardEl.append(dateForecast);
+          var tempForecast = $("<p>").text("Temp (C) " + (data.list[1].main.temp - 273.15).toFixed(2));
+          forecastCardEl.append(tempForecast);
+          var windForecast = $("<p>").text("Wind: " + data.list[1].wind.speed);
+          forecastCardEl.append(windForecast);
+          var humidityForecast = $("<p>").text("Humidity: " + data.list[1].main.humidity);
+          forecastCardEl.append(humidityForecast);
+          forecastDaily.append(forecastCardEl);
+         var forecastCardEl = $("#day2")
           var dateForecast = new Date(data.list[9].dt_txt);
           dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
           var dateForecast = $("<h5>").text(dateForecast);
@@ -77,7 +94,7 @@
           forecastCardEl.append(humidityForecast);
           forecastDaily.append(forecastCardEl);
          
-          var forecastCardEl = $("#day2")
+          var forecastCardEl = $("#day3")
           var dateForecast = new Date(data.list[17].dt_txt);
           dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
           var dateForecast = $("<h5>").text(dateForecast);
@@ -90,7 +107,7 @@
           forecastCardEl.append(humidityForecast);
           forecastDaily.append(forecastCardEl);
 
-          var forecastCardEl = $("#day3")
+          var forecastCardEl = $("#day4")
           var dateForecast = new Date(data.list[25].dt_txt);
           dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
           var dateForecast = $("<h5>").text(dateForecast);
@@ -103,7 +120,7 @@
           forecastCardEl.append(humidityForecast);
           forecastDaily.append(forecastCardEl);
 
-          var forecastCardEl = $("#day4")
+          var forecastCardEl = $("#day5")
           var dateForecast = new Date(data.list[33].dt_txt);
           dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
           var dateForecast = $("<h5>").text(dateForecast);
