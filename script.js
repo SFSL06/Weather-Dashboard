@@ -1,22 +1,18 @@
-/* eslint-disable prettier/prettier */
-//$(document).ready(function () {
-
+// $(document).ready(function () {
+ 
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?`;
 
     
    var apiForecast = `https://api.openweathermap.org/data/2.5/forecast?`;
 
     var key = "f6fcca586c887008feb57c771ac2c504";
-    // var lat = 51.5156177;
-    // var lon = -0.0919983;
+    
     var searchString = "";
     var queryURL;
     var articleNumber = 0;
+    let searchHistory = JSON.parse(localStorage.getItem("searches")) || [];
     
-    var searches = $('<div/>');
-    $('#history').append(searches);
-    searches.attr('id', 'searchHistory');
-    searches.text("This is the search history");
+  
     //     $('<div/>')
     //       .attr("id", "searches")
     //       //.append("<span/>")
@@ -44,10 +40,17 @@
         var searchString = $("#search-input").val();
         var limit = 1000;
         console.log(searchString);
-        
+        searchHistory.push(searchString);
+        localStorage.setItem("search", JSON.stringify(searchHistory));
+        loadSearchHistory()
         queryURL = apiURL + "q="  + searchString + "&appid=" + key; 
-        console.log('query: ', queryURL)
         queryForecast = apiForecast + "q="  + searchString + "&appid=" + key; 
+        console.log('query: ', queryURL)
+        getWeather(queryURL, queryForecast);
+    })
+        function getWeather(queryURL, queryForecast)
+        {
+        
         fetch(queryURL)
             .then(function (response) {
                 return response.json();
@@ -133,7 +136,24 @@
           forecastCardEl.append(humidityForecast);
           forecastDaily.append(forecastCardEl);
         });
-    });
 
-
+}
+    function loadSearchHistory() {
+       
+      
+     
+        historyEl = $(".history");
+        for (let i = 0; i < searchHistory.length; i++) {
+            
+            var historyItem = $("<div>")
+            historyItem.text(searchHistory[i]);
+            //$("historyItem").addClass("form-control d-block bg-white");
+            historyItem.attr("value", searchHistory[i]);
+            $("historyItem").click(function() {
+               getWeather(historyItem.value);
+            });
+            $('#history').append(historyItem);
+        }
+    }
+    
 // });
