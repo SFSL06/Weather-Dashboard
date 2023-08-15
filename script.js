@@ -3,6 +3,9 @@
 
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?`;
 
+    
+   var apiForecast = `https://api.openweathermap.org/data/2.5/forecast?`;
+
     var key = "f6fcca586c887008feb57c771ac2c504";
     // var lat = 51.5156177;
     // var lon = -0.0919983;
@@ -44,14 +47,14 @@
         
         queryURL = apiURL + "q="  + searchString + "&appid=" + key; 
         console.log('query: ', queryURL)
-    
+        queryForecast = apiForecast + "q="  + searchString + "&appid=" + key; 
         fetch(queryURL)
             .then(function (response) {
                 return response.json();
             }).then(function (data) {                
         // Convert the temp to Celsius
         var temp = data.main.temp - 273.15;
-        console.log(temp);
+        
         dateToday = dayjs();
         dateToday = dayjs(dateToday).format('DD/MM/YYYY');
         // Transfer content to HTML
@@ -61,6 +64,33 @@
          $(".humidity").text("Humidity: " + data.main.humidity);
                          
             });
+            fetch(queryForecast)
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {                
+        // Convert the temp to Celsius
+        // var temp = data.main.temp - 273.15;
+           console.log(data);
+        // Transfer content to HTML
+        
+        for (i = 1; i < 6; i++)
+        {
+          
+          forecastIndex  = (i * 8 ) + 1;
+          var forecastDaily = $(".forecastDaily")
+          var dateForecast = new Date(data.list[forecastIndex].dt_txt);
+          dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
+          var dateForecast = $("<h2>").text(dateForecast);
+          forecastDaily.append(dateForecast);
+          var tempForecast = $("<p>").text("Temp (C) " + (data.list[forecastIndex].main.temp - 273.15).toFixed(2));
+          forecastDaily.append(tempForecast);
+          var windForecast = $("<p>").text("Wind: " + data.list[forecastIndex].wind.speed);
+          forecastDaily.append(windForecast);
+          var humidityForecast = $("<p>").text("Humidity: " + data.list[forecastIndex].main.humidity);
+          forecastDaily.append(humidityForecast);
+          
+        }  
+        });
     });
 
 
