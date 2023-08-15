@@ -11,35 +11,13 @@
     var queryURL;
     var articleNumber = 0;
     let searchHistory = JSON.parse(localStorage.getItem("searches")) || [];
-    
-  
-    //     $('<div/>')
-    //       .attr("id", "searches")
-    //       //.append("<span/>")
-    //         .text("This will display search history")
-    //   )
-    
-    
-    var forecast = $('<div/>');
-      $('#forecast').append(forecast);
-      forecast.attr('id', 'forecast');
-      forecast.text("This is the forecast");
-      
-      
-      
-     
-//     $(".clear").click(function () {
-//         articleNumber = 0;
-//         $("#search-string").val("");
-//         $("#article-results").empty();
-//     });
+    loadSearchHistory();
 
     $(".search-button").on("click", function () {
-       //$("#search-input").empty();
-       // articleNumber = 0;
+       $("#search-input").empty();
+       
         var searchString = $("#search-input").val();
         var limit = 1000;
-        console.log(searchString);
         searchHistory.push(searchString);
         localStorage.setItem("search", JSON.stringify(searchHistory));
         loadSearchHistory()
@@ -76,13 +54,15 @@
            console.log(data);
         // Transfer content to HTML
         var forecastDaily = $(".forecastDaily");
+        $(".forecastDaily").text("")
         //var forecastCard = $(".forestCard");
         var dateForecast = "0";
         var tempForecast = "0";
         var windForecast = "0";
         var humidityForecast = "0";
-       
-          
+
+        
+         $("#forecastHeader").text("Forecast");
           //forecastIndex  = (i * 8 ) + 1;
          var forecastCardEl = $("#day1")
           var dateForecast = new Date(data.list[9].dt_txt);
@@ -143,6 +123,7 @@
       
      
         historyEl = $(".history");
+        historyEl.text("");
         for (let i = 0; i < searchHistory.length; i++) {
             
             var historyItem = $("<div>")
@@ -152,8 +133,15 @@
             $("historyItem").click(function() {
                getWeather(historyItem.value);
             });
-            $('#history').append(historyItem);
+            $(historyEl).append(historyItem);
         }
     }
-    
+
+    // Clear History button
+    $("#clear-history").on("click", function () {
+        localStorage.clear();
+        searchHistory = [];
+        loadSearchHistory();
+    })
+
 // });
