@@ -1,6 +1,6 @@
 // $(document).ready(function () {
- 
-    var apiURL = `https://api.openweathermap.org/data/2.5/weather?`;
+  //URL to call the API to find current weather
+  var apiURL = `https://api.openweathermap.org/data/2.5/weather?`;
 
     
    var apiForecast = `https://api.openweathermap.org/data/2.5/forecast?`;
@@ -9,13 +9,15 @@
     
     var searchString = "";
     var queryURL;
-    var articleNumber = 0;
+    
     let searchHistory = JSON.parse(localStorage.getItem("searches")) || [];
     loadSearchHistory();
-
+    //add click event to search button
     $(".search-button").on("click", function () {
        $("#search-input").empty();
-       
+        //user input is stored in searchString which is stored in local Storage
+        //and passed to fetch weather details
+
         var searchString = $("#search-input").val();
         var limit = 1000;
         searchHistory.push(searchString);
@@ -37,7 +39,7 @@
         // Convert the temp to Celsius
         var temp = data.main.temp - 273.15;
 
-             
+        // To get date
         dateToday = dayjs();
         dateToday = dayjs(dateToday).format('DD/MM/YYYY');
         // Transfer content to HTML
@@ -67,6 +69,7 @@
 
         // currentPicEl.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
         // currentPicEl.setAttribute("alt", response.data.weather[0].description);
+        //Get 5 day forecast
          $("#forecastHeader").text("Forecast");
           //forecastIndex  = (i * 8 ) + 1;
           var forecastCardEl = $("#day1")
@@ -137,7 +140,7 @@
 }
     function loadSearchHistory() {
        
-      
+        //display list of searches
      
         historyEl = $(".history");
         historyEl.text("");
