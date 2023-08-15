@@ -72,24 +72,66 @@
         // var temp = data.main.temp - 273.15;
            console.log(data);
         // Transfer content to HTML
-        
-        for (i = 1; i < 6; i++)
-        {
+        var forecastDaily = $(".forecastDaily");
+        //var forecastCard = $(".forestCard");
+        var dateForecast = "0";
+        var tempForecast = "0";
+        var windForecast = "0";
+        var humidityForecast = "0";
+       
           
-          forecastIndex  = (i * 8 ) + 1;
-          var forecastDaily = $(".forecastDaily")
-          var dateForecast = new Date(data.list[forecastIndex].dt_txt);
+          //forecastIndex  = (i * 8 ) + 1;
+         var forecastCardEl = $("#day1")
+          var dateForecast = new Date(data.list[9].dt_txt);
           dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
-          var dateForecast = $("<h2>").text(dateForecast);
-          forecastDaily.append(dateForecast);
-          var tempForecast = $("<p>").text("Temp (C) " + (data.list[forecastIndex].main.temp - 273.15).toFixed(2));
-          forecastDaily.append(tempForecast);
-          var windForecast = $("<p>").text("Wind: " + data.list[forecastIndex].wind.speed);
-          forecastDaily.append(windForecast);
-          var humidityForecast = $("<p>").text("Humidity: " + data.list[forecastIndex].main.humidity);
-          forecastDaily.append(humidityForecast);
-          
-        }  
+          var dateForecast = $("<h5>").text(dateForecast);
+          forecastCardEl.append(dateForecast);
+          var tempForecast = $("<p>").text("Temp (C) " + (data.list[9].main.temp - 273.15).toFixed(2));
+          forecastCardEl.append(tempForecast);
+          var windForecast = $("<p>").text("Wind: " + data.list[9].wind.speed);
+          forecastCardEl.append(windForecast);
+          var humidityForecast = $("<p>").text("Humidity: " + data.list[9].main.humidity);
+          forecastCardEl.append(humidityForecast);
+          forecastDaily.append(forecastCardEl);
+         
+          var forecastCardEl = $("#day2")
+          var dateForecast = new Date(data.list[17].dt_txt);
+          dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
+          var dateForecast = $("<h5>").text(dateForecast);
+          forecastCardEl.append(dateForecast);
+          var tempForecast = $("<p>").text("Temp (C) " + (data.list[17].main.temp - 273.15).toFixed(2));
+          forecastCardEl.append(tempForecast);
+          var windForecast = $("<p>").text("Wind: " + data.list[17].wind.speed);
+          forecastCardEl.append(windForecast);
+          var humidityForecast = $("<p>").text("Humidity: " + data.list[17].main.humidity);
+          forecastCardEl.append(humidityForecast);
+          forecastDaily.append(forecastCardEl);
+
+          var forecastCardEl = $("#day3")
+          var dateForecast = new Date(data.list[25].dt_txt);
+          dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
+          var dateForecast = $("<h5>").text(dateForecast);
+          forecastCardEl.append(dateForecast);
+          var tempForecast = $("<p>").text("Temp (C) " + (data.list[25].main.temp - 273.15).toFixed(2));
+          forecastCardEl.append(tempForecast);
+          var windForecast = $("<p>").text("Wind: " + data.list[25].wind.speed);
+          forecastCardEl.append(windForecast);
+          var humidityForecast = $("<p>").text("Humidity: " + data.list[25].main.humidity);
+          forecastCardEl.append(humidityForecast);
+          forecastDaily.append(forecastCardEl);
+
+          var forecastCardEl = $("#day4")
+          var dateForecast = new Date(data.list[33].dt_txt);
+          dateForecast = dayjs(dateForecast).format('DD/MM/YYYY');
+          var dateForecast = $("<h5>").text(dateForecast);
+          forecastCardEl.append(dateForecast);
+          var tempForecast = $("<p>").text("Temp (C) " + (data.list[33].main.temp - 273.15).toFixed(2));
+          forecastCardEl.append(tempForecast);
+          var windForecast = $("<p>").text("Wind: " + data.list[33].wind.speed);
+          forecastCardEl.append(windForecast);
+          var humidityForecast = $("<p>").text("Humidity: " + data.list[33].main.humidity);
+          forecastCardEl.append(humidityForecast);
+          forecastDaily.append(forecastCardEl);
         });
     });
 
