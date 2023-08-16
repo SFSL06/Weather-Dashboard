@@ -10,7 +10,9 @@
     var searchString = "";
     var queryURL;
     
-    let searchHistory = JSON.parse(localStorage.getItem("searches")) || [];
+    var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+    console.log(searchHistory)
+    // To load search Hsitory
     loadSearchHistory();
     //add click event to search button
     $(".search-button").on("click", function () {
@@ -22,10 +24,10 @@
         var limit = 1000;
         searchHistory.push(searchString);
         localStorage.setItem("search", JSON.stringify(searchHistory));
-        loadSearchHistory()
+        loadSearchHistory();
         queryURL = apiURL + "q="  + searchString + "&appid=" + key; 
         queryForecast = apiForecast + "q="  + searchString + "&appid=" + key; 
-        console.log('query: ', queryURL)
+       
         getWeather(queryURL, queryForecast);
     })
         function getWeather(queryURL, queryForecast)
@@ -144,18 +146,35 @@
      
         historyEl = $(".history");
         historyEl.text("");
-        for (let i = 0; i < searchHistory.length; i++) {
+        for (var i = 0; i < searchHistory.length; i++) {
             
-            var historyItem = $("<div>")
+            var historyItem = $("<input>")
             historyItem.text(searchHistory[i]);
             //$("historyItem").addClass("form-control d-block bg-white");
+            historyItem.attr("type", "text");
+            historyItem.attr("readonly", true);
             historyItem.attr("value", searchHistory[i]);
-            $("historyItem").click(function() {
-               getWeather(historyItem.value);
-            });
+            historyItem.addClass("search-btn") 
             $(historyEl).append(historyItem);
+            
+            historyItem.attr("readonly", true);
+            
         }
+        // Adding a click event listener to all elements with a class of "search-btn"
+      $(document).on("click", ".search-btn", function(){
+          
+        var cityName = $(this).val();
+        console.log(cityName);
+        queryURL = apiURL + "q="  + cityName + "&appid=" + key; 
+       
+        queryForecast = apiForecast + "q="  + cityName + "&appid=" + key; 
+        console.log('query: ', queryURL)
+        getWeather(queryURL, queryForecast);
+      });
     }
+
+   
+
 
     // Clear History button
     $("#clear-history").on("click", function () {
